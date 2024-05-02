@@ -51,3 +51,12 @@ def count_occurrences(dataframe, columns):
     count_series = dataframe.groupby(columns).size()
     new_df = count_series.to_frame(name="Occurrences").reset_index()
     print(new_df)
+
+def count_outliers(cutoff,column_name,dataframe):
+    ShowerPositions = dataframe[column_name]
+    CountOutliers=0
+    for i in range(len(ShowerPositions)):
+    pos = abs(ShowerPositions[i])
+    if (pos>cutoff):
+        CountOutliers += 1
+    print(CountOutliers)
