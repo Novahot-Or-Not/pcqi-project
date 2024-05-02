@@ -46,3 +46,8 @@ def is_shower(row):
         return False
     else:
         return True
+    
+def count_occurrences(dataframe, columns):
+    count_series = dataframe.groupby(columns).size()
+    new_df = count_series.to_frame(name="Occurrences").reset_index()
+    print(new_df)
