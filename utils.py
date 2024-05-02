@@ -56,7 +56,7 @@ def count_outliers(cutoff,column_name,dataframe):
     ShowerPositions = dataframe[column_name]
     CountOutliers=0
     for i in range(len(ShowerPositions)):
-    pos = abs(ShowerPositions[i])
-    if (pos>cutoff):
-        CountOutliers += 1
+        pos = abs(ShowerPositions[i])
+        if (pos>cutoff):
+            CountOutliers += 1
     print(CountOutliers)
