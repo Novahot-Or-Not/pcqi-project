@@ -1,3 +1,5 @@
+import os
+
 def column_renamer(input):
     rename_dict = {
         "Unnamed: 0": "Run number",
@@ -60,3 +62,6 @@ def count_outliers(cutoff,column_name,dataframe):
         if (pos>cutoff):
             CountOutliers += 1
     print(CountOutliers)
+
+def clear_line():
+    print("\r" + " " * (os.get_terminal_size().columns - 1), end = "\r")
