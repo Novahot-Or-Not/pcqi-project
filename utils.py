@@ -131,23 +131,6 @@ def load_from_h5(filepaths):
 
     return dataframe
 
-def scaling_data(dataframe, scaler_name, column_names, dropped_columns):
-    '''
-    Standardize data (mean, std) according to chosen scaling method.
-    '''
-    column_names = [x for x in column_names if x not in dropped_columns]
-    filtered_df = dataframe.drop(dropped_columns, axis=1)
-    print(filtered_df.info())
-    scaler = scaler_name.fit(filtered_df)
-    print(f'Scaler for standardization : {scaler}')
-    svm_df_standard = scaler.transform(filtered_df)
-    svm_df_standard = pd.DataFrame(svm_df_standard,columns=column_names)
-
-    mean = svm_df_standard.mean(axis=0)
-    st_dev = svm_df_standard.std(axis=0)
-
-    return svm_df_standard, mean, st_dev
-
 def normalise_dataframe(dataframe, excluded_columns=[]):
     unmodified_df = dataframe[excluded_columns]
     dataframe.drop(excluded_columns, axis=1, inplace=True)
