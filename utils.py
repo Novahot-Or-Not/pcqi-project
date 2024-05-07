@@ -142,3 +142,18 @@ if(__name__ == "__main__"):
     dataframe = load_from_h5(filepaths)
 
     dataframe
+
+def scaling_data(dataframe, scaler_name, column_names):
+    '''
+    Standardize data (mean, std) according to chosen scaling method.
+    '''
+    filtered_df = dataframe.drop("Is shower?", axis=1)
+    scaler = scaler_name.fit(filtered_df)
+    print(f'Scaler for standardization : {scaler}')
+    svm_df_standard = scaler.transform(svm_df)
+    svm_df_standard = pd.DataFrame(svm_df_standard,columns=column_names)
+
+    mean = svm_df_standard.mean(axis=0)
+    st_dev = svm_df_standard.std(axis=0)
+
+    return svm_df_standard, mean, st_dev
