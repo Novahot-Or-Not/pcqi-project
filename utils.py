@@ -95,6 +95,46 @@ def load_from_h5(filepaths):
 
     return dataframe
 
+#returns dataframe with only the specified columns
+def filter_dataframe(dataframe):
+    columns = ["crkv_nhits100[:,0,0]",
+               "crkv_nhits100[:,0,2]",
+               "crkv_nhits100[:,1,2]",
+               "crkv_nhits50[:,0,0]",
+               "Distance between shower and track start",
+               "Time difference between shower and track start",
+               "E.trks.fitinf[:,0,0]",
+               "E.trks.fitinf[:,0,1]",
+               "E.trks.fitinf[:,0,5]",
+               "E.trks.fitinf[:,0,9]",
+               "Track length",
+               "Track x-direction",
+               "Track y-direction",
+               "Track z-direction",
+               "Track x-position",
+               "Track y-position",
+               "Track z-position",
+               "Shower x-direction",
+               "Shower y-direction",
+               "Shower z-direction",
+               "Shower x-position",
+               "Shower y-position",
+               "Shower z-position",
+               "T.feat_Neutrino2020.cherCond_hits_trig_meanZposition",
+               "Number of detector spheres with unscattered light signals",
+               "Number of hits used in track reconstruction",
+               "T.feat_Neutrino2020.n_hits_earlyTrig",
+               "T.feat_Neutrino2020.QupMinusQdn",
+               "T.sum_hits.ndoms",
+               "T.sum_jppshower.n_selected_hits",
+               "Inelasticity",
+               "Particle name",
+               "Is shower?"
+    ]
+
+    return dataframe[columns]
+
+
 if(__name__ == "__main__"):
     filenames = ["neutrino11x.h5", "neutrino12x.h5", "neutrino13x.h5"]
     filepaths = [os.path.join("data", filename) for filename in filenames]
