@@ -1,5 +1,6 @@
 import os
 import pandas as pd
+from sklearn.preprocessing import scale, robust_scale, quantile_transform
 
 used_columns = ["crkv_nhits100[:,0,0]",
             "crkv_nhits100[:,0,2]",
@@ -146,6 +147,20 @@ def scaling_data(dataframe, scaler_name, column_names, dropped_columns):
     st_dev = svm_df_standard.std(axis=0)
 
     return svm_df_standard, mean, st_dev
+
+def normalise_dataframe(dataframe, excluded_columns=[]):
+    unmodified_df = dataframe[excluded_columns]
+    dataframe.drop(excluded_columns, axis=1, inplace=True)
+
+    data = quantile_transform(dataframe, output_distribution="normal")
+    dataframe = pd.DataFrame(data=data, columns=dataframe.columns)
+
+    dataframe.reset_index(inplace=True, drop=True)
+    unmodified_df.reset_index(inplace=True, drop=True)
+
+    dataframe = pd.concat((dataframe, unmodified_df), axis=1)
+
+    return dataframe
 
 
 if(__name__ == "__main__"):
