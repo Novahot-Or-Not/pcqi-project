@@ -1,4 +1,5 @@
 import os
+import pandas as pd
 
 def column_renamer(input):
     rename_dict = {
@@ -65,3 +66,23 @@ def count_outliers(cutoff,column_name,dataframe):
 
 def clear_line():
     print("\r" + " " * (os.get_terminal_size().columns - 1), end = "\r")
+
+def load_from_h5(filepaths):
+    df_list = []
+    for filepath in filepaths:
+        df_list.append(pd.read_hdf(filepath))
+    dataframe = pd.concat(df_list)
+
+    dataframe.rename(column_renamer, axis="columns", inplace=True)
+    dataframe["Particle name"] = dataframe.apply(lambda row: pdgid_converter(row["pdgid"]), axis=1)
+    dataframe["Is shower?"] = dataframe.apply(is_shower, axis=1)
+
+    return dataframe
+
+if(__name__ == "__main__"):
+    filenames = ["neutrino11x.h5", "neutrino12x.h5", "neutrino13x.h5"]
+    filepaths = [os.path.join("data", filename) for filename in filenames]
+
+    dataframe = load_from_h5(filepaths)
+
+    dataframe
