@@ -2,6 +2,22 @@ import os
 import pandas as pd
 
 def column_renamer(input):
+    """
+    Renames standard column names to something more human-readable.
+
+    Returns a human-readable name corresponding to the input column name.
+    If the input column name is not in the dictionary, returns the input column name.
+
+    Arguments
+    --------
+    input : string
+        Name of the column to be renamed
+
+    Returns
+    -------
+    newname : string
+        New name for the column
+    """
     rename_dict = {
         "Unnamed: 0": "Run number",
         "angle_shfit_gandalf": "Angle between direction of shower and track",
