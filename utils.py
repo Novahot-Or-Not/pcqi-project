@@ -103,6 +103,16 @@ def is_shower(row):
         return True
     
 def count_occurrences(dataframe, columns):
+    """
+    Displays how often each (combination of) values occurs in the specified columns.
+
+    Arguments
+    ---------
+    dataframe : pd.Dataframe
+        Dataframe to be analysed
+    columns : iterable
+        Iterable containing the names of the columns to be analysed
+    """
     count_series = dataframe.groupby(columns).size()
     new_df = count_series.to_frame(name="Occurrences").reset_index()
     print(new_df)
@@ -117,6 +127,7 @@ def count_outliers(cutoff,column_name,dataframe):
     print(CountOutliers)
 
 def clear_line():
+    """Clears the current line in the console."""
     print("\r" + " " * (os.get_terminal_size().columns - 1), end = "\r")
 
 def load_from_h5(filepaths):
@@ -132,6 +143,24 @@ def load_from_h5(filepaths):
     return dataframe
 
 def normalise_dataframe(dataframe, excluded_columns=[]):
+    """
+    Normalises each feature in the dataframe.
+
+    Returns a dataframe where each column has been transformed to have zero mean and unit variance.
+    Columns can be excluded from the transformation by specifying them in excluded_columns.
+
+    Arguments
+    ---------
+    dataframe : pd.Dataframe
+        Dataframe to be normalised
+    excluded_columns : list
+        List containing the names of the columns which should not be normalised
+
+    Returns
+    -------
+    dataframe:
+        Dataframe with normalised columns
+    """
     unmodified_df = dataframe[excluded_columns]
     dataframe.drop(excluded_columns, axis=1, inplace=True)
 
