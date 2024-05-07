@@ -134,15 +134,6 @@ def filter_dataframe(dataframe):
 
     return dataframe[columns]
 
-
-if(__name__ == "__main__"):
-    filenames = ["neutrino11x.h5", "neutrino12x.h5", "neutrino13x.h5"]
-    filepaths = [os.path.join("data", filename) for filename in filenames]
-
-    dataframe = load_from_h5(filepaths)
-
-    dataframe
-
 def scaling_data(dataframe, scaler_name, column_names):
     '''
     Standardize data (mean, std) according to chosen scaling method.
@@ -157,3 +148,12 @@ def scaling_data(dataframe, scaler_name, column_names):
     st_dev = svm_df_standard.std(axis=0)
 
     return svm_df_standard, mean, st_dev
+
+
+if(__name__ == "__main__"):
+    filenames = ["neutrino11x.h5", "neutrino12x.h5", "neutrino13x.h5"]
+    filepaths = [os.path.join("data", filename) for filename in filenames]
+
+    dataframe = load_from_h5(filepaths)
+
+    dataframe
