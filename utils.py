@@ -142,7 +142,7 @@ def equal_entries_df(column_name: str, dataframe, used_columns: list):
     column = [column_name]
     count_df = count_occurrences(dataframe, column)
     min_occurrences = count_df['Occurrences'].min()
-    print(f'Smallest entry value amount : {min_occurrences}')
+    print(f'Smallest count number : {min_occurrences}')
 
     grouped = dataframe.groupby(column_name)
     new_df = pd.DataFrame(columns=used_columns)

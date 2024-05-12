@@ -30,8 +30,11 @@ if(not os.path.isfile(parquet_filepath)):
     print("Missing values: {}".format(dataframe.isnull().values.sum()))
 
     #drop rows to get equal amounts of data from each particle type
-    column_name = "Particle name"
-    dataframe = equal_entries_df(column_name, dataframe, used_columns)
+    equalize = False
+    if equalize == True:
+        print('Equalizing distribution per particle')
+        column_name = "Particle name"
+        dataframe = equal_entries_df(column_name, dataframe, used_columns)
 
     #normalise data
     print("Normalising data")
