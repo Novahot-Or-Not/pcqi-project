@@ -3,6 +3,7 @@ import pandas as pd
 
 from sklearn.model_selection import train_test_split
 from sklearn.svm import LinearSVC
+from sklearn.ensemble import RandomForestClassifier
 from utils import load_from_h5, used_columns, normalise_dataframe, equal_entries_df
 from joblib import dump
 
@@ -10,11 +11,19 @@ from joblib import dump
 filenames = ["neutrino11x.h5", "neutrino12x.h5", "neutrino13x.h5"]
 filepaths = [os.path.join("data", filename) for filename in filenames]
 parquet_filepath = os.path.join("data", "neutrino_processed.parquet")
-excluded_columns = ["Is shower?", "Particle name", "Inelasticity"]
-model_filename = "model.joblib"
+excluded_columns = ["Is shower?", "Particle name", "Inelasticity", "is_cc"]
+model_filename = "m8_RandForest.joblib"
 model_filepath = os.path.join("models", model_filename)
 equalise_columns = True
 equalised_columns = ["Particle name", "is_cc"]
+
+#classifier parameters
+## linear SVM
+dual="auto"
+
+## RandomForestClassifier
+n_estimators=15
+max_depth=None
 
 
 if(not os.path.isfile(parquet_filepath)):
@@ -59,7 +68,8 @@ print("Validation samples:\t{}".format(X_valid.shape[0]))
 
 #train model
 print("Training model")
-classifier = LinearSVC(dual="auto")
+classifier = RandomForestClassifier(n_estimators, max_depth=None)
+#classifier = LinearSVC(dual)
 classifier.fit(X_train, y_train)
 
 #validate model
