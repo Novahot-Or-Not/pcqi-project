@@ -128,8 +128,8 @@ def equal_entries_df(equalised_columns: list, dataframe: pd.DataFrame, used_colu
 
     Arguments
     --------
-    column_name : string
-        Name of the column to be used
+    equalised_columns : list
+        List containing the names of the columns to be balanced on
     dataframe : pd.DataFrame
         Dataframe to be truncated
     used_columns : list
