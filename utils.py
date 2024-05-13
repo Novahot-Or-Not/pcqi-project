@@ -184,7 +184,6 @@ def train_test_balanced(dataframe, equalised_columns, train_columns):
     for row in count_series.iterrows():
         #get series with combinations of each value
         series = row[1][0:-1]
-        print(series)
         
         #get dataframe with entries which are equal to the specified combination
         bool_index = pd.DataFrame([dataframe[index] == series[index] for index in series.index]).transpose()
