@@ -1,6 +1,7 @@
 import os
 import pandas as pd
 from sklearn.preprocessing import quantile_transform
+from sklearn.model_selection import train_test_split
 
 used_columns = ["crkv_nhits100[:,0,0]",
                 "crkv_nhits100[:,0,2]",
@@ -159,8 +160,51 @@ def equal_entries_df(equalised_columns: list, dataframe: pd.DataFrame, used_colu
     test_count_df = count_occurrences(new_df, equalised_columns)
     return new_df
 
-def train_test_balanced(dataframe_features, dataframe_labels, equalised_columns):
-    pass
+def train_test_balanced(dataframe, equalised_columns, train_columns):
+    """
+    Divides a dataframe into training and validation sets, while keeping the distribution of the specified columns equal.
+
+    Arguments
+    ---------
+    dataframe : pd.Dataframe
+        Dataframe to be divided into training and validation sets
+    equalised_columns : list
+        List containing the column names of which the distribution should be kept equal
+    train_columns : list
+        List containing the column names of the features used for training
+
+    Returns
+    -------
+    X_train, X_valid, y_train, y_valid : list of pd.Dataframe
+        Dataframes containing the features and labels of the training and validation sets
+    """
+    X_train_list, X_valid_list, y_train_list, y_valid_list = [], [], [], []
+
+    count_series = count_occurrences(dataframe, equalised_columns, silent=True)
+    for row in count_series.iterrows():
+        #get series with combinations of each value
+        series = row[1][0:-1]
+        print(series)
+        
+        #get dataframe with entries which are equal to the specified combination
+        bool_index = pd.DataFrame([dataframe[index] == series[index] for index in series.index]).transpose()
+        temp_df = dataframe.loc[bool_index.apply(all, axis=1)]
+        
+        #split dataframe into training and validation sets
+        X_train_temp, X_valid_temp, y_train_temp, y_valid_temp = train_test_split(temp_df[train_columns], temp_df["Is shower?"])
+
+        X_train_list.append(X_train_temp)
+        X_valid_list.append(X_valid_temp)
+        y_train_list.append(y_train_temp)
+        y_valid_list.append(y_valid_temp)
+
+    #concatenate dataframe
+    X_train = pd.concat(X_train_list)
+    X_valid = pd.concat(X_valid_list)
+    y_train = pd.concat(y_train_list)
+    y_valid = pd.concat(y_valid_list)
+
+    return X_train, X_valid, y_train, y_valid
 
 def count_outliers(cutoff,column_name,dataframe):
     ShowerPositions = dataframe[column_name]

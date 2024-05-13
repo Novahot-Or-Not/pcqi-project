@@ -3,14 +3,14 @@ import pandas as pd
 
 from sklearn.model_selection import train_test_split
 from sklearn.svm import LinearSVC
-from utils import load_from_h5, used_columns, normalise_dataframe, equal_entries_df
+from utils import load_from_h5, used_columns, normalise_dataframe, equal_entries_df, train_test_balanced
 from joblib import dump
 
 
 filenames = ["neutrino11x.h5", "neutrino12x.h5", "neutrino13x.h5"]
 filepaths = [os.path.join("data", filename) for filename in filenames]
 parquet_filepath = os.path.join("data", "neutrino_processed.parquet")
-excluded_columns = ["Is shower?", "Particle name", "Inelasticity"]
+excluded_columns = ["Is shower?", "Particle name", "Inelasticity", "is_cc"]
 model_filename = "model.joblib"
 model_filepath = os.path.join("models", model_filename)
 equalise_columns = True
@@ -25,9 +25,6 @@ if(not os.path.isfile(parquet_filepath)):
     #exclude data which is not used
     print("Excluding unused data")
     dataframe = dataframe[used_columns]
-    #print("Used columns:")
-    #for column in dataframe.columns:
-    #    print(column)
     
     #remove rows with missing values
     print("Removing missing values ({} now)".format(dataframe.isnull().values.sum()))
@@ -52,7 +49,8 @@ else:
 #divide data into training/validation sets
 print("Dividing data into training and validation sets")
 train_columns = [x for x in used_columns if x not in excluded_columns]
-X_train, X_valid, y_train, y_valid = train_test_split(dataframe[train_columns], dataframe["Is shower?"])
+X_train, X_valid, y_train, y_valid = train_test_balanced(dataframe, equalised_columns, train_columns)
+#X_train, X_valid, y_train, y_valid = train_test_split(dataframe[train_columns], dataframe["Is shower?"])
 
 print("Training samples:\t{}".format(X_train.shape[0]))
 print("Validation samples:\t{}".format(X_valid.shape[0]))
