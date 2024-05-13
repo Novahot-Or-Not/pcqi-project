@@ -119,7 +119,7 @@ def count_occurrences(dataframe, columns):
     print(new_df)
     return new_df
 
-def equal_entries_df(column_name: str, dataframe, used_columns: list):
+def equal_entries_df(column_name: str, dataframe: pd.DataFrame, used_columns: list):
     '''
     Drops rows of dataframe to get equal amounts of different entry values in a chosen column (here : Particle name).
 
@@ -129,7 +129,7 @@ def equal_entries_df(column_name: str, dataframe, used_columns: list):
     --------
     column_name : string
         Name of the column to be used
-    dataframe : dataframe
+    dataframe : pd.DataFrame
         Dataframe to be truncated
     used_columns : list
         Column names as in dataframe
