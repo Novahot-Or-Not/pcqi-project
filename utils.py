@@ -34,7 +34,8 @@ used_columns = ["crkv_nhits100[:,0,0]",
                 "T.sum_jppshower.n_selected_hits",
                 "Inelasticity",
                 "Particle name",
-                "Is shower?"
+                "Is shower?",
+                "is_cc"
 ]
 
 def column_renamer(input):
@@ -119,7 +120,7 @@ def count_occurrences(dataframe, columns):
     print(new_df)
     return new_df
 
-def equal_entries_df(column_name: str, dataframe: pd.DataFrame, used_columns: list):
+def equal_entries_df(equalised_columns: list, dataframe: pd.DataFrame, used_columns: list):
     '''
     Drops rows of dataframe to get equal amounts of different entry values in a chosen column (here : Particle name).
 
@@ -139,12 +140,11 @@ def equal_entries_df(column_name: str, dataframe: pd.DataFrame, used_columns: li
     new_df : dataframe
         Truncated dataframe
     '''
-    column = [column_name]
-    count_df = count_occurrences(dataframe, column)
+    count_df = count_occurrences(dataframe, equalised_columns)
     min_occurrences = count_df['Occurrences'].min()
     print(f'Smallest count number : {min_occurrences}')
 
-    grouped = dataframe.groupby(column_name)
+    grouped = dataframe.groupby(equalised_columns)
     new_df = pd.DataFrame(columns=used_columns)
 
     for particle_name, frame in grouped:
@@ -153,7 +153,7 @@ def equal_entries_df(column_name: str, dataframe: pd.DataFrame, used_columns: li
         new_df = new_df.merge(right=frame, how='outer')
 
     print('After dropping rows : ')
-    test_count_df = count_occurrences(new_df, column)
+    test_count_df = count_occurrences(new_df, equalised_columns)
     return new_df
 
 def count_outliers(cutoff,column_name,dataframe):
