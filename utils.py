@@ -103,7 +103,7 @@ def is_shower(row):
     else:
         return True
     
-def count_occurrences(dataframe, columns):
+def count_occurrences(dataframe, columns, silent = True):
     """
     Displays how often each (combination of) values occurs in the specified columns.
 
@@ -113,16 +113,19 @@ def count_occurrences(dataframe, columns):
         Dataframe to be analysed
     columns : iterable
         Iterable containing the names of the columns to be analysed
+    silent : bool
+        Sets whether to print information to the console
     """
     count_series = dataframe.groupby(columns).size()
     new_df = count_series.to_frame(name="Occurrences").reset_index()
-    print('Counting particle occurrences : ')
-    print(new_df)
+    if(not silent):
+        print('Counting particle occurrences : ')
+        print(new_df)
     return new_df
 
 def equal_entries_df(equalised_columns: list, dataframe: pd.DataFrame, used_columns: list):
     '''
-    Drops rows of dataframe to get equal amounts of different entry values in a chosen column (here : Particle name).
+    Drops rows of dataframe to get equal amounts of different entry values for the chosen columns.
 
     Returns truncated dataframe.
 
@@ -155,6 +158,9 @@ def equal_entries_df(equalised_columns: list, dataframe: pd.DataFrame, used_colu
     print('After dropping rows : ')
     test_count_df = count_occurrences(new_df, equalised_columns)
     return new_df
+
+def train_test_balanced(dataframe_features, dataframe_labels, equalised_columns):
+    pass
 
 def count_outliers(cutoff,column_name,dataframe):
     ShowerPositions = dataframe[column_name]
