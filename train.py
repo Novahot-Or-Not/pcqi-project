@@ -13,6 +13,8 @@ parquet_filepath = os.path.join("data", "neutrino_processed.parquet")
 excluded_columns = ["Is shower?", "Particle name", "Inelasticity"]
 model_filename = "model.joblib"
 model_filepath = os.path.join("models", model_filename)
+equalise_columns = True
+equalised_columns = ["Particle name", "is_cc"]
 
 
 if(not os.path.isfile(parquet_filepath)):
@@ -23,6 +25,9 @@ if(not os.path.isfile(parquet_filepath)):
     #exclude data which is not used
     print("Excluding unused data")
     dataframe = dataframe[used_columns]
+    #print("Used columns:")
+    #for column in dataframe.columns:
+    #    print(column)
     
     #remove rows with missing values
     print("Removing missing values ({} now)".format(dataframe.isnull().values.sum()))
@@ -30,11 +35,9 @@ if(not os.path.isfile(parquet_filepath)):
     print("Missing values: {}".format(dataframe.isnull().values.sum()))
 
     #drop rows to get equal amounts of data from each particle type
-    equalize = False
-    if equalize == True:
+    if equalise_columns == True:
         print('Equalizing distribution per particle')
-        column_name = "Particle name"
-        dataframe = equal_entries_df(column_name, dataframe, used_columns)
+        dataframe = equal_entries_df(equalised_columns, dataframe, used_columns)
 
     #normalise data
     print("Normalising data")
