@@ -3,7 +3,7 @@ import pandas as pd
 
 from sklearn.model_selection import train_test_split
 from sklearn.svm import LinearSVC
-from utils import load_from_h5, used_columns, normalise_dataframe
+from utils import load_from_h5, used_columns, normalise_dataframe, equal_entries_df
 from joblib import dump
 
 
@@ -28,6 +28,13 @@ if(not os.path.isfile(parquet_filepath)):
     print("Removing missing values ({} now)".format(dataframe.isnull().values.sum()))
     dataframe.dropna(inplace=True)
     print("Missing values: {}".format(dataframe.isnull().values.sum()))
+
+    #drop rows to get equal amounts of data from each particle type
+    equalize = False
+    if equalize == True:
+        print('Equalizing distribution per particle')
+        column_name = "Particle name"
+        dataframe = equal_entries_df(column_name, dataframe, used_columns)
 
     #normalise data
     print("Normalising data")

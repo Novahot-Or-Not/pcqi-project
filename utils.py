@@ -115,7 +115,46 @@ def count_occurrences(dataframe, columns):
     """
     count_series = dataframe.groupby(columns).size()
     new_df = count_series.to_frame(name="Occurrences").reset_index()
+    print('Counting particle occurrences : ')
     print(new_df)
+    return new_df
+
+def equal_entries_df(column_name: str, dataframe: pd.DataFrame, used_columns: list):
+    '''
+    Drops rows of dataframe to get equal amounts of different entry values in a chosen column (here : Particle name).
+
+    Returns truncated dataframe.
+
+    Arguments
+    --------
+    column_name : string
+        Name of the column to be used
+    dataframe : pd.DataFrame
+        Dataframe to be truncated
+    used_columns : list
+        Column names as in dataframe
+
+    Returns
+    -------
+    new_df : dataframe
+        Truncated dataframe
+    '''
+    column = [column_name]
+    count_df = count_occurrences(dataframe, column)
+    min_occurrences = count_df['Occurrences'].min()
+    print(f'Smallest count number : {min_occurrences}')
+
+    grouped = dataframe.groupby(column_name)
+    new_df = pd.DataFrame(columns=used_columns)
+
+    for particle_name, frame in grouped:
+        frame = frame.reset_index()
+        frame = frame.truncate(after=min_occurrences)
+        new_df = new_df.merge(right=frame, how='outer')
+
+    print('After dropping rows : ')
+    test_count_df = count_occurrences(new_df, column)
+    return new_df
 
 def count_outliers(cutoff,column_name,dataframe):
     ShowerPositions = dataframe[column_name]
