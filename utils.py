@@ -1,40 +1,40 @@
 import os
 import pandas as pd
-from sklearn.preprocessing import scale, robust_scale, quantile_transform
+from sklearn.preprocessing import quantile_transform
 
 used_columns = ["crkv_nhits100[:,0,0]",
-            "crkv_nhits100[:,0,2]",
-            "crkv_nhits100[:,1,2]",
-            "crkv_nhits50[:,0,0]",
-            "Distance between shower and track start",
-            "Time difference between shower and track start",
-            "E.trks.fitinf[:,0,0]",
-            "E.trks.fitinf[:,0,1]",
-            "E.trks.fitinf[:,0,5]",
-            "E.trks.fitinf[:,0,9]",
-            "Track length",
-            "Track x-direction",
-            "Track y-direction",
-            "Track z-direction",
-            "Track x-position",
-            "Track y-position",
-            "Track z-position",
-            "Shower x-direction",
-            "Shower y-direction",
-            "Shower z-direction",
-            "Shower x-position",
-            "Shower y-position",
-            "Shower z-position",
-            "T.feat_Neutrino2020.cherCond_hits_trig_meanZposition",
-            "Number of detector spheres with unscattered light signals",
-            "Number of hits used in track reconstruction",
-            "T.feat_Neutrino2020.n_hits_earlyTrig",
-            "T.feat_Neutrino2020.QupMinusQdn",
-            "T.sum_hits.ndoms",
-            "T.sum_jppshower.n_selected_hits",
-            "Inelasticity",
-            "Particle name",
-            "Is shower?"
+                "crkv_nhits100[:,0,2]",
+                "crkv_nhits100[:,1,2]",
+                "crkv_nhits50[:,0,0]",
+                "Distance between shower and track start",
+                "Time difference between shower and track start",
+                "E.trks.fitinf[:,0,0]",
+                "E.trks.fitinf[:,0,1]",
+                "E.trks.fitinf[:,0,5]",
+                "E.trks.fitinf[:,0,9]",
+                "Track length",
+                "Track x-direction",
+                "Track y-direction",
+                "Track z-direction",
+                "Track x-position",
+                "Track y-position",
+                "Track z-position",
+                "Shower x-direction",
+                "Shower y-direction",
+                "Shower z-direction",
+                "Shower x-position",
+                "Shower y-position",
+                "Shower z-position",
+                "T.feat_Neutrino2020.cherCond_hits_trig_meanZposition",
+                "Number of detector spheres with unscattered light signals",
+                "Number of hits used in track reconstruction",
+                "T.feat_Neutrino2020.n_hits_earlyTrig",
+                "T.feat_Neutrino2020.QupMinusQdn",
+                "T.sum_hits.ndoms",
+                "T.sum_jppshower.n_selected_hits",
+                "Inelasticity",
+                "Particle name",
+                "Is shower?"
 ]
 
 def column_renamer(input):
@@ -130,6 +130,7 @@ def clear_line():
     """Clears the current line in the console."""
     print("\r" + " " * (os.get_terminal_size().columns - 1), end = "\r")
 
+#kinda violates single-responsibility principle ngl
 def load_from_h5(filepaths):
     df_list = []
     for filepath in filepaths:
