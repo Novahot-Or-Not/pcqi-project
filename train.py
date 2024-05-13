@@ -3,6 +3,7 @@ import pandas as pd
 
 from sklearn.model_selection import train_test_split
 from sklearn.svm import LinearSVC
+from sklearn.ensemble import RandomForestClassifier
 from utils import load_from_h5, used_columns, normalise_dataframe, equal_entries_df, train_test_balanced
 from joblib import dump
 
@@ -15,6 +16,14 @@ model_filename = "model.joblib"
 model_filepath = os.path.join("models", model_filename)
 equalise_columns = True
 equalised_columns = ["Particle name", "is_cc"]
+
+#classifier parameters
+## linear SVM
+dual="auto"
+
+## RandomForestClassifier
+n_estimators=15
+max_depth=None
 
 
 if(not os.path.isfile(parquet_filepath)):
@@ -57,7 +66,8 @@ print("Validation samples:\t{}".format(X_valid.shape[0]))
 
 #train model
 print("Training model")
-classifier = LinearSVC(dual="auto")
+classifier = RandomForestClassifier(n_estimators, max_depth=None)
+#classifier = LinearSVC(dual)
 classifier.fit(X_train, y_train)
 
 #validate model
