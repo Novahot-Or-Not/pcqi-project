@@ -8,7 +8,7 @@ from utils import load_from_h5, used_columns, normalise_dataframe, equal_entries
 from joblib import dump
 
 
-filenames = ["neutrino11x.h5", "neutrino12x.h5", "neutrino13x.h5"]
+filenames = ["new_neutrino11x.h5", "new_neutrino12x.h5", "new_neutrino13x.h5"]
 filepaths = [os.path.join("data", filename) for filename in filenames]
 parquet_filepath = os.path.join("data", "neutrino_processed.parquet")
 excluded_columns = ["Is shower?", "Particle name", "Inelasticity", "is_cc"]
@@ -17,12 +17,24 @@ model_filepath = os.path.join("models", model_filename)
 equalise_columns = True
 equalised_columns = ["Particle name", "is_cc"]
 
+#only use these columns as features
+#used_columns = ["E.trks.fitinf[:,0,0]",
+#                "E.trks.fitinf[:,0,1]",
+#                "E.trks.fitinf[:,0,5]",
+#                "E.trks.fitinf[:,0,9]",
+#                "Number of detector spheres with unscattered light signals",
+#                "Inelasticity",
+#                "Particle name",
+#                "Is shower?",
+#                "is_cc"
+#]
+
 #classifier parameters
 ## linear SVM
 dual="auto"
 
 ## RandomForestClassifier
-n_estimators=15
+n_estimators=200
 max_depth=None
 
 
@@ -66,8 +78,8 @@ print("Validation samples:\t{}".format(X_valid.shape[0]))
 
 #train model
 print("Training model")
-classifier = RandomForestClassifier(n_estimators, max_depth=None)
-#classifier = LinearSVC(dual)
+#classifier = RandomForestClassifier(n_estimators, max_depth=None)
+classifier = LinearSVC(dual=dual)
 classifier.fit(X_train, y_train)
 
 #validate model

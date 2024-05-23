@@ -36,7 +36,9 @@ used_columns = ["crkv_nhits100[:,0,0]",
                 "Inelasticity",
                 "Particle name",
                 "Is shower?",
-                "is_cc"
+                "is_cc",
+                "Track reconstruction likelyhood",
+                "Shower reconstruction likelyhood"
 ]
 
 def column_renamer(input):
@@ -76,7 +78,9 @@ def column_renamer(input):
         "E.trks.pos.z[:,1]": "Shower z-position",
         "T.feat_Neutrino2020.cherCond_n_doms": "Number of detector spheres with unscattered light signals",
         "T.feat_Neutrino2020.gandalf_nHits": "Number of hits used in track reconstruction",
-        "T.sum_mc_nu.by": "Inelasticity"
+        "T.sum_mc_nu.by": "Inelasticity",
+        "E.trks.lik[:,0]": "Track reconstruction likelyhood",
+        "E.trks.lik[:,1]": "Shower reconstruction likelyhood"
     }
     try:
         newname = rename_dict[input]
