@@ -5,9 +5,9 @@ import numpy as np
 
 from utils import load_from_h5, used_columns
 
-#filenames = ["neutrino11x.h5", "neutrino12x.h5", "neutrino13x.h5"]
-#filepaths = [os.path.join("data", filename) for filename in filenames]
-filepaths = [os.path.join("data","newsel.h5")]
+filenames = ["new_neutrino11x.h5", "new_neutrino12x.h5", "new_neutrino13x.h5"]
+filepaths = [os.path.join("data", filename) for filename in filenames]
+#filepaths = [os.path.join("data","newsel.h5")]
 
 print("Loading dataframe")
 dataframe = load_from_h5(filepaths)
@@ -50,8 +50,12 @@ def plotting_hist_scatter(dataframe):
     '''
     x = dataframe["Likelihood track"]
     y = dataframe["Likelihood shower"]
-    xmax = max(abs(x))
-    ymax = max(abs(y))
+
+    x_exp = np.exp(-x)
+    y_exp = np.exp(y)
+
+    xmax = max(np.exp(-x))
+    ymax = max(np.exp(y))
 
     fig1, [[ax1, ax2], [ax3, ax4]] = plt.subplots(2,2,figsize=(15,15))
 
@@ -60,11 +64,10 @@ def plotting_hist_scatter(dataframe):
     ax1.set_ylabel('Likelihood shower')
     ax1.set_title('Scatter plot')
 
-    h = ax2.hist2d(x,y, bins=100,cmap='viridis')
+    ax2.scatter(x_exp,y_exp)
     ax2.set_xlabel('Likelihood track')
     ax2.set_ylabel('Likelihood shower')
-    ax2.set_title('2d histogram')
-    fig1.colorbar(h[3])
+    ax2.set_title('Scatter plot with exp(-x),exp(y)')
 
     ax3.hist(x)
     ax3.set_xlabel('Likelihood track')
@@ -80,36 +83,36 @@ def plotting_hist_scatter(dataframe):
 
 
     fig2, [[ax5, ax6], [ax7, ax8]] = plt.subplots(2,2,figsize=(15,15))
-    xline = np.linspace(0,xmax,1000)
-    yline = np.linspace(0,-ymax,1000)
+    xline = np.linspace(0.001,xmax,1000)
+    yline = np.linspace(0.001,-ymax,1000)
 
     h1 = ax5.hist2d(x,y, bins=300,cmap='viridis')
     ax5.set_xlabel('Likelihood track')
     ax5.set_ylabel('Likelihood shower')
     ax5.set_title('2d histogram')
     fig2.colorbar(h1[3])
-    ax5.plot(xline,yline,color='red')
+    #ax5.plot(-np.log(xline),np.log(yline),color='red')
 
     h2 = ax6.hist2d(x,y, bins=300, range=[[0,200],[-200,0]],cmap='viridis')
     ax6.set_xlabel('Likelihood track')
     ax6.set_ylabel('Likelihood shower')
     ax6.set_title('2d histogram')
     fig2.colorbar(h2[3])
-    ax6.plot(xline,yline,color='red')
+    #ax6.plot(xline,yline,color='red')
 
     h3 = ax7.hist2d(x,y, bins=100, range=[[0,100],[-100,0]],cmap='viridis')
     ax7.set_xlabel('Likelihood track')
     ax7.set_ylabel('Likelihood shower')
     ax7.set_title('2d histogram')
     fig2.colorbar(h3[3])
-    ax7.plot(xline,yline,color='red')
+    #ax7.plot(xline,yline,color='red')
 
-    h4 = ax8.hist2d(x,y, bins=100, range=[[20,75],[-125,-25]],cmap='viridis')
+    h4 = ax8.hist2d(x_exp,y_exp,range = [[0,0.02*np.power(10,14)],[0,0.01]], bins=100,norm='linear',cmap='viridis') #range=[[20,75],[-125,-25]]
     ax8.set_xlabel('Likelihood track')
     ax8.set_ylabel('Likelihood shower')
     ax8.set_title('2d histogram')
     fig2.colorbar(h4[3])
-    ax8.plot(xline,yline,color='red')
+    #ax8.plot(xline,yline,color='red')
 
     fig2.suptitle(f'Likelihood histograms with energy > {Emin}')
 
