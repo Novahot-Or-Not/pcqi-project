@@ -37,8 +37,8 @@ used_columns = ["crkv_nhits100[:,0,0]",
                 "Particle name",
                 "Is shower?",
                 "is_cc",
-                "E.trks.lik[:,0]",
-                "E.trks.lik[:,1]"
+                "Track reconstruction likelyhood",
+                "Shower reconstruction likelyhood"
 ]
 
 def column_renamer(input):
