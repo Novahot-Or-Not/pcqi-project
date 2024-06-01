@@ -90,6 +90,19 @@ def column_renamer(input):
     return newname
 
 def pdgid_converter(id):
+    """
+    Helper function to find particle name from its Particle Data Group ID (PDGID)
+
+    Arguments
+    ---------
+    id : int
+        Particle Data Group ID
+    
+    Returns
+    -------
+    string:
+        Name of the particle
+    """
     pdgid_dict = {
         12: "Electron neutrino",
         14: "Muon neutrino",
@@ -101,6 +114,19 @@ def pdgid_converter(id):
     return pdgid_dict[id]
 
 def is_shower(row):
+    """
+    Helper function which checks if a particle has a shower signature
+
+    Arguments
+    ---------
+    row : pd.Series
+        Row containing data of one particle (interaction)
+
+    Returns
+    -------
+    bool:
+        True if particle interaction is a charged current (anti) muon neutrino, False otherwise
+    """
     id = row["pdgid"]
     is_cc = row["is_cc"]
     if((id == 14 or id == -14) and is_cc == 1.0):
@@ -120,6 +146,11 @@ def count_occurrences(dataframe, columns, silent = True):
         Iterable containing the names of the columns to be analysed
     silent : bool
         Sets whether to print information to the console
+
+    Returns
+    -------
+    new_df : pd.Dataframe
+        Dataframe containing the unique (combinations of) values for the column(s), along with the amount of occurrences for each
     """
     count_series = dataframe.groupby(columns).size()
     new_df = count_series.to_frame(name="Occurrences").reset_index()
@@ -209,7 +240,25 @@ def train_test_balanced(dataframe, equalised_columns, train_columns):
 
     return X_train, X_valid, y_train, y_valid
 
+#not used anywhere, artifact from early days of data analysis
 def count_outliers(cutoff,column_name,dataframe):
+    """
+    Counts the outliers for a certain feature
+
+    Arguments
+    ---------
+    cutoff : float
+        Cutoff value for what is counted as an outlier
+    column_name : str
+        Name of the feature to be analysed
+    dataframe : pd.Dataframe
+        Dataframe to be analysed
+
+    Returns
+    -------
+    CountOutliers : int
+        Amount of outliers found
+    """
     ShowerPositions = dataframe[column_name]
     CountOutliers=0
     for i in range(len(ShowerPositions)):
@@ -224,6 +273,21 @@ def clear_line():
 
 #kinda violates single-responsibility principle ngl
 def load_from_h5(filepaths):
+    """
+    Loads data from multiple HDF files and adds columns for particle name and interaction signature.
+
+    Assumes columns in all files are the same.
+
+    Arguments
+    ---------
+    filepaths : list
+        List containing the paths to the HDF files to be read
+    
+    Returns
+    -------
+    dataframe : pd.Dataframe
+        Dataframe containing the combined data from all files
+    """
     df_list = []
     for filepath in filepaths:
         df_list.append(pd.read_hdf(filepath))
