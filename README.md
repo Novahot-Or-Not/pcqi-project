@@ -32,6 +32,7 @@ This is the main file, where the following things are being done :
 
 ## Analysis of SVC model coefficients
 analyse_model_coefficients.py
+
 Analyse feature importance for the linear SVC models by loading corresponding .parquet file and by plotting a bar plot.
 
 ## Predicting signatures using a model
