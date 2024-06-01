@@ -7,7 +7,6 @@ from utils import load_from_h5, used_columns
 
 filenames = ["new_neutrino11x.h5", "new_neutrino12x.h5", "new_neutrino13x.h5"]
 filepaths = [os.path.join("data", filename) for filename in filenames]
-#filepaths = [os.path.join("data","newsel.h5")]
 
 print("Loading dataframe")
 dataframe = load_from_h5(filepaths)
@@ -44,7 +43,7 @@ def preprocessing_data(dataframe,Emin):
     return dataframe
 
 
-def plotting_hist_scatter(dataframe,separated):
+def plotting_hist_scatter(dataframe,separated_figures):
     '''
     Plotting a scatter plot of the likelihood data track vs. shower.
     Plotting 2d histograms of track and shower likelihood.
@@ -69,7 +68,7 @@ def plotting_hist_scatter(dataframe,separated):
     x_track     = df_track["Track reconstruction likelyhood"]
     y_track     = df_track["Shower reconstruction likelyhood"]
 
-    if separated==True :
+    if separated_figures==True :
         plt.figure(num=1,figsize=(7, 4))
         plt.scatter(x,y,marker='.',c='C2',s=2)
         plt.xlabel('Track reconstruction likelihood')
@@ -118,7 +117,7 @@ def plotting_hist_scatter(dataframe,separated):
 
         plt.show()
     
-    else:
+    else:separated
         fig1, [[ax1, ax2], [ax3, ax4]] = plt.subplots(2,2,figsize=(15,15))
 
         ax1.scatter(x,y,c='C2',s=2)
@@ -186,4 +185,4 @@ def plotting_hist_scatter(dataframe,separated):
 Emin = 9000
 dataframe = preprocessing_data(dataframe, Emin)
 
-plotting_hist_scatter(dataframe,separated=True)
+plotting_hist_scatter(dataframe,separated_figures=True)
