@@ -8,6 +8,23 @@ from utils import column_renamer, is_shower, pdgid_converter, clear_line
 
 
 def plot_density(dataframe, *, gridsize = 100, datapoint_count = 1000, xmin = 300, xmax = 600, ymin = 450, ymax = 700):
+    """
+    Plot the density of track reconstructions in the x-y plane and display the plot.
+
+    Only uses the first `datapoint_count` particles. This is implemented as a time-saving feature.
+    
+    Arguments:
+    ----------
+    dataframe : pd.Dataframe
+        Dataframe containing the particle data to be analysed
+    gridsize : int
+        Resolution of the density plot, resulting in a gridsize x gridsize array of density values
+    datapoint_count : int
+        Amount of datapoints to be used for the density plot
+    xmin, xmax, ymin, ymax : ints
+        Parameters indicating the x-y location of the density plot
+    """
+
     x = dataframe[0:datapoint_count]["Track x-position"]
     y = dataframe[0:datapoint_count]["Track y-position"]
 
