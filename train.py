@@ -2,7 +2,7 @@ import os
 import pandas as pd
 
 from sklearn.model_selection import train_test_split
-from sklearn.svm import LinearSVC
+from sklearn.svm import LinearSVC, SVC
 from sklearn.ensemble import RandomForestClassifier
 from utils import load_from_h5, used_columns, normalise_dataframe, equal_entries_df, train_test_balanced
 from joblib import dump
@@ -32,6 +32,9 @@ equalised_columns = ["Particle name", "is_cc"]
 #classifier parameters
 ## linear SVM
 dual="auto"
+
+## SVC
+kernel = "poly"
 
 ## RandomForestClassifier
 n_estimators=200
@@ -79,7 +82,8 @@ print("Validation samples:\t{}".format(X_valid.shape[0]))
 #train model
 print("Training model")
 #classifier = RandomForestClassifier(n_estimators, max_depth=None)
-classifier = LinearSVC(dual=dual)
+#classifier = LinearSVC(dual=dual)
+classifier = SVC(kernel=kernel)
 classifier.fit(X_train, y_train)
 
 #validate model
