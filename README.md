@@ -15,8 +15,8 @@ In `LikelihoodAnalysis.py` one wants to know, whether it is possible to visually
 
 ## How to train a model
 1. In `train.py`, configure the parameters
-	1. Set `filenames` to the names of the files containing the data on which you want to train the model.\\
-	Note: The code expects .h5 files within a subfolder named "data"
+	1. Set `filenames` to the names of the files containing the data on which you want to train the model.\
+	**Note:** The code expects .h5 files within a subfolder named "data"
 	2. Set `equalised_columns` to the names of the columns on which you want to balance the training data. Set `equalise_columns` to False if you do not wish to balance the data.
 	3. Choose the type of model on which you wish to train. The currently available models are `LinearSVC`, `SVC`, and `RandomForestClassifier`. Comment and uncomment the relevant code in lines 77-79 to choose your model.
 	4. Set the parameters specific to your chosen model.
