@@ -20,10 +20,14 @@ In `LikelihoodAnalysis.py` one wants to know, whether it is possible to visually
 	2. Set `equalised_columns` to the names of the columns on which you want to balance the training data. Set `equalise_columns` to False if you do not wish to balance the data.
 	3. Choose the type of model on which you wish to train. The currently available models are `LinearSVC`, `SVC`, and `RandomForestClassifier`. Comment and uncomment the relevant code in lines 77-79 to choose your model.
 	4. Set the parameters specific to your chosen model.
-	5. Set `model_filename` to the name of the model. This file will be saved in a subfolder named "models"\
-2. In `utils.py`, fill in names of the features which you want to use for training, along with "Inelasticity", "Particle name", "Is shower?", and "is_cc".
+		- For `LinearSVC`: `dual`
+		- For `SVC`: `kernel`
+		- For `RandomForestClassifier`: `n_estimators` and `max_depth`
+	5. Set `model_filename` to the name of the model. This file will be saved in a subfolder named "models"
+2. In `utils.py`, fill in names of the features which you want to use for training into `used_columns`, along with "Inelasticity", "Particle name", "Is shower?", and "is_cc".
 	1. It is possible to rename some features for better readability during analysis. The function `column_renamer` contains a dictionary `rename_dict`, containing the original feature names along with their desired names. Add any features you wish to rename to this dictionary.
 3. Run the script by calling `python train.py` from the command line.
+4. Once the training is done, the accuracy of the model on the validation set will be outputted to the console.
 
 **Note:** If you have previously trained a model, the preprocessed data will be stored in a .parquet file (location specified in `parquet_filepath` within `train.py`). This is to save time spent on loading and preprocessing the data. If you change the used data or any of the preprocessing steps, you must delete the .parquet file in order to see any changes. 
 
@@ -35,19 +39,19 @@ Analyse feature importance for the linear SVC models by loading corresponding .j
 (not implemented yet)
 test
 
-## Files
-### utils.py
+## Explanation per file
+
+### `utils.py`
 This file contains functions used by the other files, as well as a list, used_columns, which contains the names of the features to be used in training.
-### train.py
+
+### `train.py`
 This is the main file, where the following things are being done :
-1. Loading data : load from .h5 file in folder named "data", rename columns and  add columns "Is shower?" and "Particle name"
-2. Pre-processing data :
-	- exclude unused columns, remove rows with missing entries, balance data to get same amount of each particle type, normalise data and save to .parquet file
-	- if pre-processed data file already exists : load dataframe from file
-3. Splitting data : divide data into training and validation set, each containing balanced amount  of particle type events (or optionally unbalanced)
+1. Loading data
+2. Pre-processing data
+3. Splitting data
 4. Training model : train model with classifier of choice (comment out other classifiers) and by setting parameters of choice (this is done at the top of the code)
 	- Linear SVC : set "dual" parameter
 	- SVC : set "kernel" parameter
 	- RFC : set number of trees "n_estimators"
-5. Validating model : determine accuracy of model by using validation set
-6. Saving model :Save model data to .joblib file in folder named "models"
+5. Validating model
+6. Saving model
