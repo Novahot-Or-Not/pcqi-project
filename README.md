@@ -25,7 +25,7 @@ In `LikelihoodAnalysis.py` one wants to know, whether it is possible to visually
 	1. It is possible to rename some features for better readability during analysis. The function `column_renamer` contains a dictionary `rename_dict`, containing the original feature names along with their desired names. Add any features you wish to rename to this dictionary.
 3. Run the script by calling `python train.py` from the command line.
 
-**Note:** If you have previously trained a model, the preprocessed data will be stored in a .parquet file (location specified in `parquet_filepath`). This is to save time spent on loading a preprocessing the data. If you change the used data or any of the preprocessing steps, you must delete the .parquet file in order to see any changes. 
+**Note:** If you have previously trained a model, the preprocessed data will be stored in a .parquet file (location specified in `parquet_filepath` within `train.py`). This is to save time spent on loading and preprocessing the data. If you change the used data or any of the preprocessing steps, you must delete the .parquet file in order to see any changes. 
 
 ## Analysis of SVC model coefficients
 `analyse_model_coefficients.py`
