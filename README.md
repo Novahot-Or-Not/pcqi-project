@@ -20,7 +20,7 @@ In `LikelihoodAnalysis.py` one wants to know, whether it is possible to visually
 	2. Set `equalised_columns` to the names of the columns on which you want to balance the training data. Set `equalise_columns` to False if you do not wish to balance the data.
 	3. Choose the type of model on which you wish to train. The currently available models are `LinearSVC`, `SVC`, and `RandomForestClassifier`. Comment and uncomment the relevant code in lines 77-79 to choose your model.
 	4. Set the parameters specific to your chosen model.
-	5. Set `model_filename` to the name of the model. This file will be saved in a subfolder named "models"
+	5. Set `model_filename` to the name of the model. This file will be saved in a subfolder named "models"\
 **Note:** If you have previously trained a model, the preprocessed data will be stored in a .parquet file (location specified in `parquet_filepath`). This is to save time spent on loading a preprocessing the data. If you change the used data or any of the preprocessing steps, you must delete the .parquet file in order to see any changes. 
 2. In `utils.py`, fill in names of the features which you want to use for training, along with "Inelasticity", "Particle name", "Is shower?", and "is_cc".
 	1. It is possible to rename some features for better readability during analysis. The function `column_renamer` contains a dictionary `rename_dict`, containing the original feature names along with their desired names. Add any features you wish to rename to this dictionary.
