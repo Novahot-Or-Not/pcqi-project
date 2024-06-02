@@ -40,18 +40,41 @@ Analyse feature importance for the linear SVC models by loading corresponding .j
 test
 
 ## Explanation per file
+### `analyse_model_coefficients.py`
+Analyses the importance of each feature in the classification process and displays these in a histogram. Only available for `LinearSVC` models and `SVC` models trained with a linear kernel.
 
-### `utils.py`
-This file contains functions used by the other files, as well as a list, used_columns, which contains the names of the features to be used in training.
+#### Instructions
+1. Set `model_filename` to the name of the model.\
+**Note:** The model should be in a subfolder named "models".
+2. Run the script from the command line. This will open a window containing the histogram.
+
+### `LikelihoodAnalysis.py`
+Creates a scatterplot of likelihood data for track and shower.
+
+#### Instructions
+1. Set `filenames` to the names of the files containing the data to be analysed.
+2. Set the energy threshold `Emin`.
+3. Run the script from the command line. This will open a window containing the plot.
+
+### `plot_density.py`
+Plots the density of track reconstructions in the x-y plane and display the plot. Only uses the first `datapoint_count` particles. This is implemented as a time-saving feature.
+
+#### Instructions
+1. Set the x and y range of the window using `xmin`, `xmax`, `ymin`, and `ymax`.
+2. Set the amount of datapoints to analyse using `datapoint_count`.
+3. Set the grid size of the density plot using `grid_size`.
+4. Run the script from the command line. This will open a window containing the density plot.
 
 ### `train.py`
-This is the main file, where the following things are being done :
+Trains a machine learning model on specified data. Data is manipulated according to the following steps before training:
 1. Loading data
 2. Pre-processing data
 3. Splitting data
-4. Training model : train model with classifier of choice (comment out other classifiers) and by setting parameters of choice (this is done at the top of the code)
-	- Linear SVC : set "dual" parameter
-	- SVC : set "kernel" parameter
-	- RFC : set number of trees "n_estimators"
+4. Training model
 5. Validating model
 6. Saving model
+
+Instructions on how to use can be found above.
+
+### `utils.py`
+Contains functions used by other files. Also contains a list `used_columns`, which contains the names of the features to be used in training.
