@@ -125,7 +125,7 @@ def is_shower(row):
     Returns
     -------
     bool:
-        True if particle interaction is a charged current (anti) muon neutrino, False otherwise
+        True if particle interaction is a charged current interaction with (anti) muon neutrinos, False otherwise
     """
     id = row["pdgid"]
     is_cc = row["is_cc"]
@@ -271,7 +271,7 @@ def clear_line():
     """Clears the current line in the console."""
     print("\r" + " " * (os.get_terminal_size().columns - 1), end = "\r")
 
-#kinda violates single-responsibility principle ngl
+# technically violates single-responsibility principle
 def load_from_h5(filepaths):
     """
     Loads data from multiple HDF files and adds columns for particle name and interaction signature.

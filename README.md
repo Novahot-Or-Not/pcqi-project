@@ -22,7 +22,7 @@ This is the main file, where the following things are being done :
 2. Pre-processing data :
 	- exclude unused columns, remove rows with missing entries, balance data to get same amount of each particle type, normalise data and save to .parquet file
 	- if pre-processed data file already exists : load dataframe from file
-3. Splitting data : divide data into training and validation set, each containing balanced amount of particle type events
+3. Splitting data : divide data into training and validation set, each containing balanced amount  of particle type events (or optionally unbalanced)
 4. Training model : train model with classifier of choice (comment out other classifiers) and by setting parameters of choice (this is done at the top of the code)
 	- Linear SVC : set "dual" parameter
 	- SVC : set "kernel" parameter

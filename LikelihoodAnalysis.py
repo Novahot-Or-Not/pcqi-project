@@ -117,7 +117,7 @@ def plotting_hist_scatter(dataframe,separated_figures):
 
         plt.show()
     
-    else:separated
+    else:
         fig1, [[ax1, ax2], [ax3, ax4]] = plt.subplots(2,2,figsize=(15,15))
 
         ax1.scatter(x,y,c='C2',s=2)

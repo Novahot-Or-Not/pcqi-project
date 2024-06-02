@@ -10,24 +10,17 @@ from joblib import dump
 
 filenames = ["new_neutrino11x.h5", "new_neutrino12x.h5", "new_neutrino13x.h5"]
 filepaths = [os.path.join("data", filename) for filename in filenames]
+
 parquet_filepath = os.path.join("data", "neutrino_processed.parquet")
+
 excluded_columns = ["Is shower?", "Particle name", "Inelasticity", "is_cc"]
+
 model_filename = "model.joblib"
 model_filepath = os.path.join("models", model_filename)
+
 equalise_columns = True
 equalised_columns = ["Particle name", "is_cc"]
 
-#only use these columns as features
-#used_columns = ["E.trks.fitinf[:,0,0]",
-#                "E.trks.fitinf[:,0,1]",
-#                "E.trks.fitinf[:,0,5]",
-#                "E.trks.fitinf[:,0,9]",
-#                "Number of detector spheres with unscattered light signals",
-#                "Inelasticity",
-#                "Particle name",
-#                "Is shower?",
-#                "is_cc"
-#]
 
 #classifier parameters
 ## linear SVM
