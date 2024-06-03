@@ -34,19 +34,20 @@ Analyses the importance of each feature in the classification process and displa
 2. Run the script from the command line. This will open a window containing the histogram.
 
 ### `LikelihoodAnalysis.py`
-Creates a scatterplot of likelihood data for track and shower.
+The parameters of likelihood for a track and the likelihood for a shower are plotted against each other, once in scatter plots and also with 2d histograms to see the amount of events on each point on the graphs. Besides, this is done for high-energy events, so a cutoff has to be defined. It is possible to choose between getting completely separated figures or to plot multiple graphs onto one figure.
 
-In `LikelihoodAnalysis.py` one wants to know, whether it is possible to visually separate track and shower events when plotting data of the two signatures. The parameters of likelihood for a track and the likelihood for a shower are plotted against each other, once in scatter plots and also with 2d histograms to see the amount of events on each point on the graphs. Besides, this is done for high-energy events, so a cutoff has to be defined. It is possible to choose between getting completely separated figures or to plot multiple graphs onto one figure.
+One wants to know, whether it is possible to visually separate track and shower events when plotting data of the two signatures.
 
 #### Instructions
 1. Set `filenames` to the names of the files containing the data to be analysed.
 2. Set the energy threshold `Emin`.
-3. Run the script from the command line. This will open a window containing the plot.
+3. Set `separated_figures` to `True`, if you want the figures to be plotted separately. If not, set to `False`.
+4. Run the script from the command line. This will open a window containing the plot.
 
 ### `plot_density.py`
 Plots the density of track reconstructions in the x-y plane and displays the plot. Only uses the first `datapoint_count` particles. This is implemented as a time-saving feature.
 
-In `plot_density.py` there is a density plot of the track start variable (Track x-position, Track y-position) to see where the pre-made fit has put the track starts and whether it makes sense with the simulated environment as background.
+This plot is implemented to see where the pre-made fit has put the track starts and whether it makes sense with the simulated environment as background.
 
 #### Instructions
 1. Set the x and y range of the window using `xmin`, `xmax`, `ymin`, and `ymax`.
