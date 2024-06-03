@@ -3,12 +3,6 @@ A project for Physics of Classical/Quantum Information.
 
 This project aims at classifying neutrino track and shower signatures by using Machine Learning (ML) methods (SVC: support vector classifier, RFC: random forest classifier). The used data has been provided by Dr. Dorothea Samtleben and originates from a simulation representing ten detector units corresponding to the detector strings of the KM3NeT project (see [KM3NeT website](https://www.km3net.org/)). Furthermore, it contains parameters from a fit of the data and likelihoods for track and shower start.
 
-## Input data
-Note : Our functions expect .h5 files as input data and our models are stored in .joblib files.
-
-## Pre-analysis of the data
-Looking at properties of our data without doing any ML.
-
 ## How to train a model
 1. In `train.py`, configure the parameters
 	1. Set `filenames` to the names of the files containing the data on which you want to train the model.\
@@ -27,11 +21,10 @@ Looking at properties of our data without doing any ML.
 
 **Note:** If you have previously trained a model, the preprocessed data will be stored in a .parquet file (location specified in `parquet_filepath` within `train.py`). This is to save time spent on loading and preprocessing the data. If you change the used data or any of the preprocessing steps, you must delete the .parquet file in order to see any changes. 
 
-## Predicting signatures using a model
-(not implemented yet)
-test
-
 ## Explanation per file
+**Note:**
+Each script expects data to be stored in the HDF format, and models to be stored in the .joblib format.
+
 ### `analyse_model_coefficients.py`
 Analyses the importance of each feature in the classification process and displays these in a histogram. Only available for `LinearSVC` models and `SVC` models trained with a linear kernel.
 
